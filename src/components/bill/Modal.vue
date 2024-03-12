@@ -1,0 +1,89 @@
+<script lang="ts">
+   import { defineComponent } from "vue";
+   import CustomButton from "../misc/CustomButton.vue";
+   import type { LineType } from "@/types/BillType";
+
+   export default defineComponent({
+      components: { CustomButton },
+      props: ["billLineTemplates"],
+      methods: {
+         closeModal() {
+            this.$emit("close-modal");
+         },
+         addLine(templateName: string) {
+            this.$emit("add-line", templateName);
+            this.closeModal();
+         },
+      },
+      computed: {
+         filterTemplates() {
+            return this.billLineTemplates.filter(
+               (template: LineType) => template.template_name !== "default"
+            );
+         },
+      },
+   });
+</script>
+
+<template>
+   <div class="modal-container" @click="closeModal">
+      <div class="modal" @click.stop>
+         <CustomButton class="delete-btn" :onClick="closeModal">X</CustomButton>
+         <h2>Pick a template</h2>
+         <div class="btn-container" v-if="billLineTemplates">
+            <CustomButton
+               v-for="template in (filterTemplates as any)"
+               :onClick="() => addLine(template.template_name)"
+               :key="template.template_name"
+               :isSecondary="true"
+               >{{ template.template_name }}</CustomButton
+            >
+         </div>
+      </div>
+   </div>
+</template>
+
+<style scoped lang="scss">
+   @import "@/css/variables.scss";
+   .modal-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: grid;
+      place-items: center;
+      .modal {
+         position: relative;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+         gap: 1rem;
+         padding: 2rem;
+         background-color: $black2;
+         border-radius: 10px;
+         h2 {
+            color: $white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+         }
+         .btn-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            button {
+               background-color: $black;
+            }
+         }
+         .delete-btn {
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+         }
+      }
+   }
+</style>
