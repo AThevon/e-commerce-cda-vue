@@ -6,6 +6,13 @@
             required: true,
          },
       },
+      methods: {
+         getRating() {
+            if (this.rating === 0) return 0;
+            let roundedRating = ((Math.round(this.rating * 10) / 10) * 5) / 100;
+            return roundedRating;
+         },
+      },
    };
 </script>
 
@@ -15,20 +22,24 @@
          <div class="stars-background">
             <span class="star" v-for="i in 5" :key="`bg-${i}`">★</span>
          </div>
-         <div class="stars-foreground" :style="{ width: rating + '%' }">
+         <div
+            class="stars-foreground"
+            :style="{ width: getRating() * 20 + '%' }"
+         >
             <span class="star" v-for="i in 5" :key="`fg-${i}`">★</span>
          </div>
-         <span class="tooltip">{{ (rating * 5) / 100 }}/5</span>
+         <span class="tooltip">{{ getRating() }}/5</span>
       </div>
    </slot>
 </template>
 
 <style scoped lang="scss">
    .stars-container {
+      width: 100%;
       margin-bottom: 1rem;
       margin-inline: auto;
       position: relative;
-      width: calc(25px * 5);
+      width: calc(20.84px * 5);
       user-select: none;
 
       .stars-background ~ .stars-foreground {

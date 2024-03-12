@@ -10,10 +10,6 @@
             type: [String, Object] as any,
             default: undefined,
          },
-         onClick: {
-            type: Function as PropType<(event: any) => void | undefined>,
-            default: () => {},
-         },
          isRouterLink: {
             type: Boolean,
             default: false,
@@ -27,13 +23,6 @@
             default: false,
          },
       },
-      methods: {
-         handleClick(event: any) {
-            if (!this.isRouterLink && !this.isLink) {
-               this.onClick(event);
-            }
-         },
-      },
    });
 </script>
 
@@ -45,7 +34,7 @@
       <a v-else-if="isLink" :href="(to as any)">
          <slot></slot>
       </a>
-      <button v-else @click="handleClick">
+      <button v-else>
          <slot></slot>
       </button>
    </div>

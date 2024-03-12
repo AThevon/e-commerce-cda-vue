@@ -12,9 +12,17 @@
       },
       data() {
          return {
-            products: [] as ProductType[],
             product: {} as ProductType,
+            products: [] as ProductType[],
          };
+      },
+      watch: {
+         "$route.params.productId": {
+            immediate: true,
+            handler(newId: string) {
+               this.loadProduct(newId);
+            },
+         },
       },
       methods: {
          fetchProductData() {
@@ -23,39 +31,37 @@
                .then((data) => {
                   let productData = data;
                   this.products = productData;
-                  this.product = productData.find(
-                     (product: ProductType) =>
-                        String(product.id) === this.$route.params.id
-                  );
+                  this.loadProduct(this.$route.params.productId as string);
                })
                .catch((error) =>
                   console.error("Error fetching the local json:", error)
                );
          },
-         goPrevProduct() {
+         loadProduct(id: string) {
             if (this.products.length === 0) return;
-            const currentIndex = this.products.findIndex(
-               (product) => String(product.id) === this.$route.params.id
-            );
-            const prevIndex =
-               currentIndex - 1 >= 0
-                  ? currentIndex - 1
-                  : this.products.length - 1;
-            return {
-               name: "SingleProduct",
-               params: { id: this.products[prevIndex].id },
-            };
+            this.product =
+               this.products.find((p) => String(p.id) === id) ??
+               ({} as ProductType);
          },
-         goNextProduct() {
-            if (this.products.length === 0) return;
+         navigateToProduct(direction: string) {
             const currentIndex = this.products.findIndex(
-               (product) => String(product.id) === this.$route.params.id
+               (p) => String(p.id) === this.$route.params.productId
             );
-            const nextIndex = (currentIndex + 1) % this.products.length;
-            return {
+            let newIndex =
+               direction === "next" ? currentIndex + 1 : currentIndex - 1;
+
+            // Looping system
+            if (newIndex >= this.products.length) {
+               newIndex = 0;
+            } else if (newIndex < 0) {
+               newIndex = this.products.length - 1;
+            }
+
+            const newId = this.products[newIndex].id;
+            this.$router.push({
                name: "SingleProduct",
-               params: { id: this.products[nextIndex].id },
-            };
+               params: { productId: newId },
+            });
          },
       },
       computed: {
@@ -66,9 +72,6 @@
       },
       mounted() {
          this.fetchProductData();
-         console.log(this.$route.params.id);
-         console.log(this.product);
-         console.log(this.products);
       },
    });
 </script>
@@ -82,15 +85,13 @@
          <h2>{{ product.name }}</h2>
       </div>
       <CustomButton
-         :isRouterLink="true"
-         :to="goPrevProduct"
+         @click="navigateToProduct('previous')"
          class="button arrow left"
       >
          <font-awesome-icon icon="arrow-left" />
       </CustomButton>
       <CustomButton
-         :isRouterLink="true"
-         :to="goNextProduct"
+         @click="navigateToProduct('next')"
          class="button arrow right"
       >
          <font-awesome-icon icon="arrow-right" />

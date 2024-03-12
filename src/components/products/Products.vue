@@ -2,15 +2,19 @@
    import { defineComponent } from "vue";
    import type { ProductType } from "@/types/ProductType";
    import ProductCard from "@/components/products/ProductCard.vue";
+   import CustomButton from "../misc/CustomButton.vue";
 
    export default defineComponent({
       name: "Products",
       components: {
          ProductCard,
+         CustomButton,
       },
       data() {
          return {
             productData: [] as ProductType[],
+            displayedProducts: [] as ProductType[],
+            nbShownProducts: 6,
          };
       },
       methods: {
@@ -22,10 +26,30 @@
                .then((response) => response.json())
                .then((data) => {
                   this.productData = data;
+                  this.displayedProducts = this.productData.slice(
+                     0,
+                     this.nbShownProducts
+                  );
                })
                .catch((error) =>
                   console.error("Error fetching the local json:", error)
                );
+         },
+         showMore() {
+            const nextProducts = this.productData.slice(
+               this.displayedProducts.length,
+               this.displayedProducts.length + this.nbShownProducts
+            );
+            this.displayedProducts =
+               this.displayedProducts.concat(nextProducts);
+            if (nextProducts.length > 0) {
+               this.$nextTick(() => {
+                  window.scrollBy({
+                     top: window.innerHeight - 160,
+                     behavior: "smooth",
+                  });
+               });
+            }
          },
       },
       computed: {
@@ -49,16 +73,22 @@
 <template>
    <div>
       <p>
-         Nb of products : <span>{{ productData.length }}</span>
+         Nb of products : <span>{{ displayedProducts.length }}</span>
       </p>
       <ul>
          <ProductCard
-            v-for="product in productData"
+            v-for="product in displayedProducts"
             :key="product.id"
             :product="(product as ProductType)"
             :class="{ lowestPrice: isLowestPrice(product.id) }"
          />
       </ul>
+      <CustomButton
+         v-if="displayedProducts.length < productData.length"
+         @click="showMore"
+         class="button"
+         >Show more</CustomButton
+      >
    </div>
 </template>
 
@@ -78,7 +108,7 @@
       gap: 2rem;
       max-width: 70rem;
       margin-inline: auto;
-      margin-block: 3rem;
+      margin-block: 3rem 2rem;
       .lowestPrice {
          position: relative;
          &::after {
@@ -93,6 +123,12 @@
             padding: 1rem 2rem;
             border-radius: 0 0.5rem 0 0.5rem;
          }
+      }
+   }
+   .button {
+      margin-block: 4rem;
+      button {
+         padding: 2rem 4rem;
       }
    }
 </style>

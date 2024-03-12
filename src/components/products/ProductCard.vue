@@ -12,8 +12,9 @@
       components: { Ratings, CustomButton },
       computed: {
          rating() {
-            if (!this.product) return 0;
-            return (this.product.rating / 5) * 100;
+            if (!this.product || this.product.rating == null) return 0;
+            let roundedRating = Math.round(this.product.rating * 10) / 10;
+            return (roundedRating / 5) * 100;
          },
       },
    });
@@ -27,7 +28,7 @@
       <Ratings :rating="rating" />
       <CustomButton
          :isRouterLink="true"
-         :to="{ name: 'SingleProduct', params: { id: product.id } }"
+         :to="{ name: 'SingleProduct', params: { productId: product.id } }"
          class="button"
          >See product
       </CustomButton>
