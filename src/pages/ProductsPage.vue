@@ -12,15 +12,11 @@
 
 <template>
    <main>
-      <h2>Products</h2>
+      <h2 class="text-xl font-bold text-center mt-8 mb-4 uppercase">Products</h2>
       <Products />
    </main>
 </template>
 
 <style scoped lang="scss">
    @import "@/css/variables.scss";
-   h2 {
-      margin-block: 2rem;
-      text-align: center;
-   }
 </style>

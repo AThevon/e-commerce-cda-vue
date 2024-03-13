@@ -3,13 +3,13 @@
    import type { PropType } from "vue";
    import type { ProductType } from "@/types/ProductType";
    import Ratings from "./Ratings.vue";
-   import CustomButton from "@/components/misc/CustomButton.vue";
+   import { Button } from "../ui/button";
 
    export default defineComponent({
       props: {
          product: Object as PropType<ProductType>,
       },
-      components: { Ratings, CustomButton },
+      components: { Ratings, Button },
       computed: {
          rating() {
             if (!this.product || this.product.rating == null) return 0;
@@ -26,12 +26,13 @@
       <h3>{{ product.name }}</h3>
       <p>${{ product.unit_price }}</p>
       <Ratings :rating="rating" />
-      <CustomButton
-         :isRouterLink="true"
-         :to="{ name: 'SingleProduct', params: { productId: product.id } }"
-         class="button"
-         >See product
-      </CustomButton>
+      <Button as-child>
+         <router-link
+            :to="{ name: 'SingleProduct', params: { productId: product.id } }"
+         >
+            See product
+         </router-link>
+      </Button>
    </li>
 </template>
 

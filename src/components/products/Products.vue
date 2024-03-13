@@ -2,13 +2,13 @@
    import { defineComponent } from "vue";
    import type { ProductType } from "@/types/ProductType";
    import ProductCard from "@/components/products/ProductCard.vue";
-   import CustomButton from "../misc/CustomButton.vue";
+   import { Button } from "../ui/button";
 
    export default defineComponent({
       name: "Products",
       components: {
          ProductCard,
-         CustomButton,
+         Button,
       },
       data() {
          return {
@@ -71,7 +71,7 @@
 </script>
 
 <template>
-   <div>
+   <div class="flex flex-col items-center">
       <p>
          Nb of products : <span>{{ displayedProducts.length }}</span>
       </p>
@@ -83,12 +83,14 @@
             :class="{ lowestPrice: isLowestPrice(product.id) }"
          />
       </ul>
-      <CustomButton
+      <Button
          v-if="displayedProducts.length < productData.length"
+         class="shadow-lg mb-8"
+         variant="secondary"
          @click="showMore"
-         class="button"
-         >Show more</CustomButton
       >
+         Show more
+      </Button>
    </div>
 </template>
 
@@ -96,7 +98,6 @@
    @import "@/css/variables.scss";
    p {
       text-align: center;
-      margin-block: 1rem;
       span {
          font-weight: 700;
          font-size: 1.2rem;
@@ -123,12 +124,6 @@
             padding: 1rem 2rem;
             border-radius: 0 0.5rem 0 0.5rem;
          }
-      }
-   }
-   .button {
-      margin-block: 4rem;
-      button {
-         padding: 2rem 4rem;
       }
    }
 </style>

@@ -1,10 +1,10 @@
 <script lang="ts">
    import { defineComponent } from "vue";
-   import CustomButton from "../misc/CustomButton.vue";
    import type { LineType } from "@/types/BillType";
+   import Button from "../ui/button/Button.vue";
 
    export default defineComponent({
-      components: { CustomButton },
+      components: { Button },
       props: ["billLineTemplates"],
       methods: {
          closeModal() {
@@ -28,16 +28,23 @@
 <template>
    <div class="modal-container" @click="closeModal">
       <div class="modal" @click.stop>
-         <CustomButton class="delete-btn" :onClick="closeModal">X</CustomButton>
+         <Button
+            size="icon"
+            variant="destructive"
+            class="delete-btn"
+            :onClick="closeModal"
+            >X</Button
+         >
          <h2>Pick a template</h2>
          <div class="btn-container" v-if="billLineTemplates">
-            <CustomButton
+            <Button
                v-for="template in (filterTemplates as any)"
-               :onClick="() => addLine(template.template_name)"
                :key="template.template_name"
-               :isSecondary="true"
-               >{{ template.template_name }}</CustomButton
+               variant="secondary"
+               @click="() => addLine(template.template_name)"
             >
+               {{ template.template_name }}
+            </Button>
          </div>
       </div>
    </div>
@@ -75,9 +82,6 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
-            button {
-               background-color: $black;
-            }
          }
          .delete-btn {
             position: absolute;

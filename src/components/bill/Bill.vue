@@ -1,14 +1,14 @@
 <script lang="ts">
    import BillLine from "@/components/bill/BillLine.vue";
    import Total from "@/components/bill/Total.vue";
-   import CustomButton from "../misc/CustomButton.vue";
    import Modal from "@/components/bill/Modal.vue";
    import type { LineType } from "@/types/BillType";
    import { EnumTVA } from "@/types/BillType";
    import { defineComponent } from "vue";
+   import Button from "../ui/button/Button.vue";
 
    export default defineComponent({
-      components: { BillLine, Total, CustomButton, Modal },
+      components: { BillLine, Total, Modal, Button },
       data() {
          return {
             isModal: false,
@@ -125,13 +125,9 @@
          ></BillLine>
       </ul>
       <div class="btn-wrapper">
-         <CustomButton :onClick="() => addLine('')" :isSecondary="true"
-            >Add a row</CustomButton
-         >
-         <CustomButton :onClick="showModal" :isSecondary="true"
-            >Add a template</CustomButton
-         >
-         <CustomButton :onClick="deleteAllLines">Delete all rows</CustomButton>
+         <Button @click="() => addLine('')">Add a row</Button>
+         <Button @click="showModal">Add a template</Button>
+         <Button variant="destructive" @click="deleteAllLines">Delete all rows</Button>
       </div>
       <Modal
          v-if="isModal"

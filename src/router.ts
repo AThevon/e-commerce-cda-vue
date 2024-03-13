@@ -5,6 +5,7 @@ import ContactPage from "@/pages/ContactPage.vue";
 import ProductsPage from "@/pages/ProductsPage.vue";
 import SingleProductPage from "@/pages/SingleProductPage.vue";
 import BillPage from "@/pages/BillPage.vue";
+import CartPage from "@/pages/CartPage.vue";
 
 const routes = [
    { path: "/", name: "Home", component: HomePage },
@@ -16,6 +17,7 @@ const routes = [
    },
    { path: "/bill", name: "Bill", component: BillPage },
    { path: "/contact", name: "Contact", component: ContactPage },
+   { path: "/cart", name: "Cart", component: CartPage },
    { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
 ];
 

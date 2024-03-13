@@ -40,9 +40,8 @@
    </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
    @import "@/css/variables.scss";
-
    button {
       padding: 1rem 2rem;
    }

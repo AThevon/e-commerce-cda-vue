@@ -17,6 +17,9 @@
             </li>
          </ul>
       </nav>
+      <router-link to="/cart">
+         <font-awesome-icon icon="shopping-cart" />
+      </router-link>
    </header>
 </template>
 

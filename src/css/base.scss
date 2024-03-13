@@ -5,7 +5,6 @@
 *::after {
    box-sizing: border-box;
    margin: 0;
-   font-weight: normal;
 }
 
 body {
@@ -34,12 +33,6 @@ li {
    padding: 0;
 }
 
-button {
-   cursor: pointer;
-   border: none;
-   outline: none;
-   background: none;
-}
 
 input,
 textarea,

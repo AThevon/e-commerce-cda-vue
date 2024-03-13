@@ -1,13 +1,13 @@
 <script lang="ts">
    import { defineComponent } from "vue";
-   import CustomButton from "@/components/misc/CustomButton.vue";
    import type { ProductType } from "@/types/ProductType";
    import Ratings from "@/components/products/Ratings.vue";
+   import { Button } from "@/components/ui/button";
 
    export default defineComponent({
       name: "SingleProductPage",
       components: {
-         CustomButton,
+         Button,
          Ratings,
       },
       data() {
@@ -79,23 +79,17 @@
 <template>
    <div>
       <div class="title-container">
-         <CustomButton :isRouterLink="true" :to="'/products'" class="button"
-            >Back</CustomButton
-         >
+         <Button as-child>
+            <router-link :to="{ name: 'Products' }">Back</router-link>
+         </Button>
          <h2>{{ product.name }}</h2>
       </div>
-      <CustomButton
-         @click="navigateToProduct('previous')"
-         class="button arrow left"
-      >
+      <Button @click="navigateToProduct('previous')" class="arrow left">
          <font-awesome-icon icon="arrow-left" />
-      </CustomButton>
-      <CustomButton
-         @click="navigateToProduct('next')"
-         class="button arrow right"
-      >
+      </Button>
+      <Button @click="navigateToProduct('next')" class="arrow right">
          <font-awesome-icon icon="arrow-right" />
-      </CustomButton>
+      </Button>
       <div class="main-container">
          <div class="img-container">
             <img :src="product.image" :alt="product.name" />
@@ -105,9 +99,9 @@
             <p>{{ product.description }}</p>
             <p class="price">{{ product.unit_price }}€</p>
             <Ratings :rating="rating" />
-            <CustomButton :isRouterLink="true" :to="'/cart'" class="button"
-               >Add to cart
-            </CustomButton>
+            <Button as-child>
+               <router-link :to="{ name: 'Cart' }">Add to cart</router-link>
+            </Button>
          </div>
       </div>
    </div>
@@ -121,9 +115,6 @@
       justify-content: space-between;
       margin-block: 2rem;
       padding-inline: 3rem;
-      .button {
-         margin: 0;
-      }
       h2 {
          text-align: center;
          font-weight: 700;

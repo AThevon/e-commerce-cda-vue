@@ -1,9 +1,9 @@
 <script lang="ts">
-   import CustomButton from "../misc/CustomButton.vue";
+   import Button from "../ui/button/Button.vue";
 
    export default {
       props: ["line"],
-      components: { CustomButton },
+      components: { Button },
       watch: {
          line: {
             handler(newValue) {
@@ -35,11 +35,11 @@
          placeholder="Quantity"
       />
       <select v-model="line.tva">
-         <option value=5.5>5,5%</option>
-         <option value=10>10%</option>
-         <option value=20>20%</option>
+         <option value="5.5">5,5%</option>
+         <option value="10">10%</option>
+         <option value="20">20%</option>
       </select>
-      <CustomButton :onClick="deleteLine">Delete</CustomButton>
+      <Button variant="destructive" @click="deleteLine">Delete</Button>
    </li>
 </template>
 
@@ -71,7 +71,6 @@
          margin: 0;
       }
    }
-
 
    input::placeholder {
       color: $light-grey;
