@@ -86,7 +86,7 @@
       <Button
          v-if="displayedProducts.length < productData.length"
          class="shadow-lg mb-8"
-         variant="secondary"
+         variant="white"
          @click="showMore"
       >
          Show more

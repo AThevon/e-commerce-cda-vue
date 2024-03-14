@@ -1,6 +1,6 @@
 <template>
    <header>
-      <h1>Vue.js</h1>
+      <h1 class="font-main">Vue.js</h1>
       <nav>
          <ul>
             <li>

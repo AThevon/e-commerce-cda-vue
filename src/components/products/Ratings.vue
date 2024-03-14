@@ -24,7 +24,7 @@
          </div>
          <div
             class="stars-foreground"
-            :style="{ width: getRating() * 20 + '%' }"
+            :style="{ width: getRating() * 25 + '%' }"
          >
             <span class="star" v-for="i in 5" :key="`fg-${i}`">★</span>
          </div>
@@ -37,7 +37,7 @@
    .stars-container {
       width: 100%;
       margin-bottom: 1rem;
-      margin-inline: auto;
+      margin-right: 1.4rem;
       position: relative;
       width: calc(20.84px * 5);
       user-select: none;
@@ -68,8 +68,8 @@
       .tooltip {
          position: absolute;
          top: 50%;
-         left: 110%;
-         transform: translateY(-50%) translateX(-100%) scale(0);
+         right: 110%;
+         transform: translateY(-50%) translateX(100%) scale(0);
          font-size: 1rem;
          text-align: start;
          font-weight: 600;

@@ -3,12 +3,14 @@
    import type { ProductType } from "@/types/ProductType";
    import Ratings from "@/components/products/Ratings.vue";
    import { Button } from "@/components/ui/button";
+   import AspectRatio from "@/components/ui/aspect-ratio/AspectRatio.vue";
 
    export default defineComponent({
       name: "SingleProductPage",
       components: {
          Button,
          Ratings,
+         AspectRatio,
       },
       data() {
          return {
@@ -84,18 +86,28 @@
          </Button>
          <h2>{{ product.name }}</h2>
       </div>
-      <Button @click="navigateToProduct('previous')" class="arrow left">
+      <Button
+         size="icon"
+         class="absolute top-1/2 transform -translate-y-1/2 rounded-md text-lg font-bold py-6 px-8 left-20 transition-all duration-300 hover:py-7 hover:px-9 hover:left-[4.3rem]"
+         @click="navigateToProduct('previous')"
+      >
          <font-awesome-icon icon="arrow-left" />
       </Button>
-      <Button @click="navigateToProduct('next')" class="arrow right">
+      <Button
+         size="icon"
+         class="absolute top-1/2 transform -translate-y-1/2 rounded-md text-lg font-bold py-6 px-8 right-20 transition-all duration-300 hover:py-7 hover:px-9 hover:right-[4.3rem]"
+         @click="navigateToProduct('next')"
+      >
          <font-awesome-icon icon="arrow-right" />
       </Button>
       <div class="main-container">
-         <div class="img-container">
-            <img :src="product.image" :alt="product.name" />
+         <div class="w-[45rem]">
+            <AspectRatio :ratio="4 / 3">
+               <img :src="product.image" :alt="product.name" class="w-full h-full object-cover shadow-lg rounded-md" />
+            </AspectRatio>
          </div>
          <div class="desc-container">
-            <h3>{{ product.name }}</h3>
+            <h3 class="text-3xl font-main">{{ product.name }}</h3>
             <p>{{ product.description }}</p>
             <p class="price">{{ product.unit_price }}€</p>
             <Ratings :rating="rating" />
@@ -135,9 +147,9 @@
       &::before {
          content: "";
          position: absolute;
-         top: -70%;
-         right: -80%;
-         transform: rotate(25deg);
+         top: -90%;
+         left: -50%;
+         transform: rotate(-45deg);
          width: 200%;
          height: 120%;
          background-color: $light-grey;
@@ -148,23 +160,11 @@
          flex-direction: column;
          justify-content: center;
          z-index: 10;
-         &.img-container {
-            img {
-               height: 100%;
-               object-fit: contain;
-               border-radius: 0.5rem;
-               box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.3);
-            }
-         }
          &.desc-container {
             justify-content: flex-end;
             align-items: flex-end;
             gap: 1rem;
             text-align: end;
-            h3 {
-               font-size: 1.8rem;
-               font-weight: 700;
-            }
             p {
                font-size: 1.2rem;
                &.price {
@@ -173,22 +173,6 @@
                }
             }
          }
-      }
-   }
-   .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 5rem;
-      height: 4rem;
-      border-radius: 0.5rem;
-      font-size: 1.2rem;
-      font-weight: 700;
-      &.left {
-         left: 3rem;
-      }
-      &.right {
-         right: 3rem;
       }
    }
 </style>
