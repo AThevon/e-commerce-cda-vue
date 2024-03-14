@@ -5,10 +5,24 @@
    import type { LineType } from "@/types/BillType";
    import { EnumTVA } from "@/types/BillType";
    import { defineComponent } from "vue";
-   import Button from "../ui/button/Button.vue";
+   import Button from "@/components/ui/button/Button.vue";
+   import { toast } from "@/components/ui/toast/use-toast";
+   import {
+      AlertDialog,
+      AlertDialogTrigger,
+   } from "@/components/ui/alert-dialog";
+   import AlertDialogBill from "./AlertDialogBill.vue";
 
    export default defineComponent({
-      components: { BillLine, Total, Modal, Button },
+      components: {
+         BillLine,
+         Total,
+         Modal,
+         Button,
+         AlertDialog,
+         AlertDialogBill,
+         AlertDialogTrigger,
+      },
       data() {
          return {
             isModal: false,
@@ -39,7 +53,6 @@
                   console.error("Error fetching the local json:", error)
                );
          },
-
          addLine(templateName: string) {
             if (this.billLineTemplates.length == 0) return;
             let newLine;
@@ -63,26 +76,31 @@
          },
          deleteLine(index: number) {
             if (this.lines.length <= 1) {
-               alert("You cannot delete the last row !");
+               toast({
+                  description: "You cannot delete the last row !",
+                  variant: "destructive",
+               });
             } else {
                this.lines.splice(index, 1);
             }
          },
          deleteAllLines() {
-            if (this.lines.length <= 1) {
-               alert("You cannot delete the last row !");
-               return;
-            } else {
+            if (this.lines.length > 1) {
                let line = this.billLineTemplates.find(
                   (template) => template.template_name === "default"
                );
-               confirm("Are you sure you want to delete all lines ?") &&
-                  line &&
-                  this.lines.splice(0, this.lines.length, {
-                     ...line,
-                     id: 1,
-                  });
+               if (line === undefined) return;
+               this.lines.splice(0, this.lines.length, {
+                  ...line,
+                  id: 1,
+               });
             }
+         },
+         toastLastRow() {
+            toast({
+               description: "You cannot delete the last row !",
+               variant: "destructive",
+            });
          },
       },
       computed: {
@@ -127,7 +145,18 @@
       <div class="btn-wrapper">
          <Button @click="() => addLine('')">Add a row</Button>
          <Button @click="showModal">Add a template</Button>
-         <Button variant="destructive" @click="deleteAllLines">Delete all rows</Button>
+         <Button
+            v-if="lines.length <= 1"
+            variant="destructive"
+            @click="toastLastRow"
+            >Delete all rows</Button
+         >
+         <AlertDialog v-else>
+            <AlertDialogTrigger as-child>
+               <Button variant="destructive">Delete all rows</Button>
+            </AlertDialogTrigger>
+            <AlertDialogBill :delete-all-lines="deleteAllLines" />
+         </AlertDialog>
       </div>
       <Modal
          v-if="isModal"

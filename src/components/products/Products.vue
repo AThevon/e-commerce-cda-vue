@@ -3,6 +3,7 @@
    import type { ProductType } from "@/types/ProductType";
    import ProductCard from "@/components/products/ProductCard.vue";
    import { Button } from "../ui/button";
+   import { useProductStore } from "@/stores/useProductStore";
 
    export default defineComponent({
       name: "Products",
@@ -12,37 +13,40 @@
       },
       data() {
          return {
-            productData: [] as ProductType[],
-            displayedProducts: [] as ProductType[],
             nbShownProducts: 6,
          };
       },
+      computed: {
+         productStore() {
+            return useProductStore();
+         },
+         displayedProducts(): ProductType[] {
+            return this.productStore.products.slice(0, this.nbShownProducts);
+         },
+         lowestPriceProductIds(): number[] {
+            if (!this.productStore.products.length) return [];
+            const lowestPrice = Math.min(
+               ...this.productStore.products.map(
+                  (product: ProductType) => product.unit_price
+               )
+            );
+            return this.productStore.products
+               .filter(
+                  (product: ProductType) => product.unit_price === lowestPrice
+               )
+               .map((product: ProductType) => product.id);
+         },
+      },
       methods: {
+         async fetchProductData() {
+            await this.productStore.fetchProducts();
+         },
          isLowestPrice(id: number): boolean {
             return this.lowestPriceProductIds.includes(id);
          },
-         fetchProductData() {
-            fetch("/data/products.json")
-               .then((response) => response.json())
-               .then((data) => {
-                  this.productData = data;
-                  this.displayedProducts = this.productData.slice(
-                     0,
-                     this.nbShownProducts
-                  );
-               })
-               .catch((error) =>
-                  console.error("Error fetching the local json:", error)
-               );
-         },
          showMore() {
-            const nextProducts = this.productData.slice(
-               this.displayedProducts.length,
-               this.displayedProducts.length + this.nbShownProducts
-            );
-            this.displayedProducts =
-               this.displayedProducts.concat(nextProducts);
-            if (nextProducts.length > 0) {
+            this.nbShownProducts += 6;
+            if (this.productStore.products.length > 0) {
                this.$nextTick(() => {
                   window.scrollBy({
                      top: window.innerHeight - 160,
@@ -50,18 +54,6 @@
                   });
                });
             }
-         },
-      },
-      computed: {
-         lowestPriceProductIds(): number[] {
-            const lowestPrice = Math.min(
-               ...this.productData.map(
-                  (product: ProductType) => product.unit_price
-               )
-            );
-            return this.productData
-               .filter((product) => product.unit_price === lowestPrice)
-               .map((product) => product.id);
          },
       },
       mounted() {
@@ -84,7 +76,7 @@
          />
       </ul>
       <Button
-         v-if="displayedProducts.length < productData.length"
+         v-if="displayedProducts.length < productStore.products.length"
          class="shadow-lg mb-8"
          variant="white"
          @click="showMore"
