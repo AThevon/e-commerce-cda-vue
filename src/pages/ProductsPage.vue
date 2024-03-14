@@ -11,8 +11,8 @@
 </script>
 
 <template>
-   <main>
-      <h2 class="text-xl font-bold text-center mt-8 mb-4 uppercase">Products</h2>
+   <main class="mx-auto pt-10">
+      <h2 class="text-xl font-bold text-center mt-12 uppercase">Products</h2>
       <Products />
    </main>
 </template>

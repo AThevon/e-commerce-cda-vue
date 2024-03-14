@@ -24,7 +24,7 @@
          </div>
          <div
             class="stars-foreground"
-            :style="{ width: getRating() * 25 + '%' }"
+            :style="{ width: getRating() * 20 + '%' }"
          >
             <span class="star" v-for="i in 5" :key="`fg-${i}`">★</span>
          </div>
@@ -37,7 +37,6 @@
    .stars-container {
       width: 100%;
       margin-bottom: 1rem;
-      margin-right: 1.4rem;
       position: relative;
       width: calc(20.84px * 5);
       user-select: none;

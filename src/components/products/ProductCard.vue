@@ -41,12 +41,10 @@
 <style scoped lang="scss">
    @import "@/css/variables.scss";
    li {
-      height: 32rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 1rem;
       padding-bottom: 1rem;
       border-radius: 0.5rem;
       background-color: $white;
@@ -59,12 +57,12 @@
          }
       }
       .img-container {
-         width: 100%;
-         height: 16rem;
          overflow: hidden;
       }
       img {
+         object-fit: cover;
          width: 100%;
+         height: 18rem;
          transition: all 0.25s ease-out;
       }
       h3,
@@ -73,12 +71,12 @@
          margin-bottom: 0.5rem;
       }
       h3 {
-         font-size: 1.4rem;
+         font-size: 1.2rem;
          font-weight: 500;
          margin-top: 0.5rem;
       }
       p {
-         font-size: 1.2rem;
+         font-size: 1.1rem;
          font-weight: 700;
       }
    }
