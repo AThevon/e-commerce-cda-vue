@@ -5,6 +5,7 @@
       PopoverTrigger,
    } from "@/components/ui/popover";
    import ListItem from "@/components/misc/ListItem.vue";
+   import UserInfoSheet from "@/components/misc/UserInfoSheet.vue";
 </script>
 
 <template>
@@ -12,24 +13,26 @@
       <PopoverTrigger as-child>
          <slot />
       </PopoverTrigger>
-      <PopoverContent class="w-80">
-         <ul class="grid gap-4">
-            <ListItem
-               title="Account Informations"
-               href="/user"
-               description="View your profile"
-               icon="user"
-            >
-               Modify your informations
-            </ListItem>
+      <PopoverContent class="w-50 mt-2 mr-6">
+         <ul class="grid gap-0">
+               <ListItem
+                  title="My Profile"
+                  isLink 
+                  href="/profile"
+                  description="View your profile"
+               />
+            <UserInfoSheet>
+               <ListItem
+                  title="Change Password"
+                  description="Change your password"
+               />
+            </UserInfoSheet>
             <ListItem
                title="Disconnect"
-               href="/user"
-               description="View your profile"
-               icon="user"
-            >
-               Modify your informations
-            </ListItem>
+               description="Disconnect from your account"
+               class="text-destructive hover:text-destructive"
+               @click="console.log('disconnect')"
+            />
          </ul>
       </PopoverContent>
    </Popover>

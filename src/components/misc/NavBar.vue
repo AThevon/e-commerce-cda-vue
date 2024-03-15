@@ -1,4 +1,4 @@
-<script lang="ts">
++<script lang="ts">
    import { defineComponent } from "vue";
    import ListItem from "@/components/misc/ListItem.vue";
    import {
@@ -68,7 +68,7 @@
                },
                {
                   title: "All Bills",
-                  href: "/docs/primitives/hover-card",
+                  href: "/bill",
                   description: "Browse all the bills",
                },
             ],
@@ -142,6 +142,7 @@
                      :key="element.title"
                      :title="element.title"
                      :href="element.href"
+                     isLink
                   >
                      {{ element.description }}
                   </ListItem>
