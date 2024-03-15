@@ -9,23 +9,10 @@
 </script>
 
 <template>
-   <h1>Bill</h1>
+   <h1
+      class="text-center my-12 mx-auto text-2xl font-bold uppercase text-white bg-secondary p-4 rounded-lg w-fit"
+   >
+      Bill
+   </h1>
    <Bill />
 </template>
-
-<style scoped lang="scss">
-   @import "@/css/variables.scss";
-   h1 {
-      text-align: center;
-      margin-block: 3rem 2rem;
-      font-size: 2rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: $white;
-      background-color: $secondary-color;
-      padding: 1rem 3rem;
-      border-radius: 8px;
-      width: fit-content;
-      margin-inline: auto;
-   }
-</style>

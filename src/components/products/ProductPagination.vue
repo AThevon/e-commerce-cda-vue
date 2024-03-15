@@ -9,8 +9,8 @@
       PaginationNext,
       PaginationPrev,
    } from "@/components/ui/pagination";
-
    import { Button } from "@/components/ui/button";
+   import { useProductStore } from "@/stores/useProductStore";
 
    export default {
       components: {
@@ -24,40 +24,60 @@
          PaginationPrev,
          Button,
       },
+      computed: {
+         productStore() {
+            return useProductStore();
+         },
+         totalProducts() {
+            return this.productStore.products.length;
+         },
+         currentPage: {
+            get() {
+               return this.productStore.currentPage;
+            },
+            set(value: number) {
+               this.productStore.setPage(value);
+            },
+         },
+      },
    };
 </script>
 
 <template>
-   <Pagination
-      v-slot="{ page }"
-      :total="100"
-      :sibling-count="1"
-      show-edges
-      :default-page="2"
-   >
-      <PaginationList v-slot="{ items }" class="flex items-center gap-1">
-         <PaginationFirst />
-         <PaginationPrev />
+   <div>
+      <Pagination
+         v-model:page="currentPage"
+         :total="totalProducts"
+         :items-per-page="productStore.productsPerPage"
+         :sibling-count="1"
+         show-edges
+      >
+         <PaginationList v-slot="{ items }" class="flex items-center gap-1">
+            <PaginationFirst />
+            <PaginationPrev />
 
-         <template v-for="(item, index) in items">
-            <PaginationListItem
-               v-if="item.type === 'page'"
-               :key="index"
-               :value="item.value"
-               as-child
-            >
-               <Button
-                  class="w-10 h-10 p-0"
-                  :variant="item.value === page ? 'default' : 'outline'"
+            <template v-for="(item, index) in items">
+               <PaginationListItem
+                  v-if="item.type === 'page'"
+                  :key="index"
+                  :value="item.value"
+                  @click="currentPage = item.value"
                >
-                  {{ item.value }}
-               </Button>
-            </PaginationListItem>
-            <PaginationEllipsis v-else :key="item.type" :index="index" />
-         </template>
+                  <Button
+                     class="w-10 h-10 p-0"
+                     :variant="
+                        item.value === currentPage ? 'default' : 'outline'
+                     "
+                  >
+                     {{ item.value }}
+                  </Button>
+               </PaginationListItem>
+               <PaginationEllipsis v-else :key="item.type + index" />
+            </template>
 
-         <PaginationNext />
-         <PaginationLast />
-      </PaginationList>
-   </Pagination>
+            <PaginationNext />
+            <PaginationLast />
+         </PaginationList>
+      </Pagination>
+   </div>
 </template>

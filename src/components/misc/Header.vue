@@ -1,72 +1,68 @@
+<script lang="ts">
+   import { defineComponent } from "vue";
+   import NavBar from "./NavBar.vue";
+   import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+   import AccountPopover from "@/components/misc/AccountPopover.vue";
+
+   export default defineComponent({
+      components: {
+         NavBar,
+         Avatar,
+         AvatarImage,
+         AvatarFallback,
+         AccountPopover,
+      },
+      methods: {
+         isActiveLink(route: string) {
+            return this.$route.path === route;
+         },
+      },
+   });
+</script>
+
 <template>
-   <header>
-      <h1 class="font-main">Vue.js</h1>
+   <header
+      class="bg-black2 relative text-white flex justify-between items-center px-12 h-20"
+   >
+      <h1 class="font-main text-3xl font-bold uppercase">Vue.js</h1>
       <nav>
-         <ul>
-            <li>
-               <router-link to="/">Home</router-link>
-            </li>
-            <li>
-               <router-link to="/products">Products</router-link>
-            </li>
-            <li>
-               <router-link to="/bill">Bill</router-link>
-            </li>
-            <li>
-               <router-link to="/contact">Contact</router-link>
-            </li>
-         </ul>
+         <NavBar />
       </nav>
-      <router-link to="/cart">
-         <font-awesome-icon icon="shopping-cart" />
-      </router-link>
+      <div class="flex gap-4">
+         <Avatar
+            :class="
+               isActiveLink('/cart')
+                  ? 'outline outline-2 outline-offset-2 outline-white/90'
+                  : ''
+            "
+         >
+            <router-link
+               to="/cart"
+               class="w-full h-full flex items-center justify-center text-lg pr-[.2rem] pt-[.2rem] rounded-full"
+            >
+               <font-awesome-icon
+                  icon="shopping-cart"
+                  class="text-lg rounded-full"
+               /> </router-link
+         ></Avatar>
+         <AccountPopover>
+            <Avatar
+               :class="
+                  isActiveLink('/user')
+                     ? 'outline outline-2 outline-offset-2 outline-white/90 '
+                     : ''
+               "
+            >
+               <font-awesome-icon icon="user" class="text-lg rounded-full" />
+            </Avatar>
+         </AccountPopover>
+      </div>
    </header>
 </template>
 
-<script setup lang="ts"></script>
-
-<style scoped lang="scss">
-   @import "@/css/variables.scss";
-   header {
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-inline: 3rem;
-      height: 5rem;
-      background-color: $black2;
-      color: $white;
-      h1 {
-         font-size: 1.8rem;
-         font-weight: 700;
-         text-transform: uppercase;
-      }
-      nav ul {
-         position: absolute;
-         top: 50%;
-         left: 50%;
-         transform: translate(-50%, -50%);
-         display: flex;
-         gap: 0.5rem;
-         li {
-            a {
-               padding: 1rem 2rem;
-               border-radius: 15px;
-               font-weight: 600;
-               letter-spacing: 2px;
-               text-transform: uppercase;
-               font-size: 0.9rem;
-               transition: all 0.2s ease;
-            }
-            a:hover,
-            a.router-link-active {
-               background-color: $white2;
-               color: $black2;
-            }
-            a:not(.router-link-active):hover {
-               background-color: $light-grey;
-            }
-         }
-      }
+<style lang="scss">
+   a.router-link-active {
+      background-color: hsl(var(--white2)) !important;
+      color: hsl(var(--black2)) !important;
    }
 </style>

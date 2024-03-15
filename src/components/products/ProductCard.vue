@@ -1,9 +1,11 @@
 <script lang="ts">
-   import { defineComponent } from "vue";
+   import { defineComponent, h } from "vue";
    import type { PropType } from "vue";
    import type { ProductType } from "@/types/ProductType";
    import Ratings from "./Ratings.vue";
    import { Button } from "../ui/button";
+   import { useCartStore } from "@/stores/useCartStore";
+   import { ToastAction, toast } from "../ui/toast";
 
    export default defineComponent({
       props: {
@@ -16,68 +18,73 @@
             let roundedRating = Math.round(this.product.rating * 10) / 10;
             return (roundedRating / 5) * 100;
          },
+         cartStore() {
+            return useCartStore();
+         },
+      },
+      methods: {
+         goToProduct() {
+            if (this.product) {
+               this.$router.push({
+                  name: "SingleProduct",
+                  params: { productId: this.product.id },
+               });
+            }
+         },
+         addToCart() {
+            if (this.product) this.cartStore.addToCart(this.product);
+            toast({
+               title: `Item added to cart :`,
+               description: this.product?.name,
+               action: h(
+                  ToastAction,
+                  {
+                     altText: "Go to cart",
+                     onClick: () => {
+                        this.$router.push({ name: "Cart" });
+                     },
+                  },
+                  {
+                     default: () => "Go to cart",
+                  }
+               ),
+            });
+         },
       },
    });
 </script>
 
 <template>
-   <li v-if="product">
-      <div class="img-container">
-         <img :src="product.image" :alt="product.name" />
+   <li
+      v-if="product"
+      @click="goToProduct"
+      class="flex flex-col items-center justify-center pb-4 rounded-lg bg-white overflow-hidden cursor-pointer transition-all ease-in duration-200 hover:shadow-lg active:scale-95 active:shadow-none"
+   >
+      <div class="overflow-hidden w-full">
+         <img
+            :src="product.image"
+            :alt="product.name"
+            class="w-full h-72 object-cover transition-all ease-out duration-300"
+         />
       </div>
-      <h3>{{ product.name }}</h3>
-      <p>${{ product.unit_price }}</p>
+      <h3 class="text-center mt-2 mb-1 text-lg font-medium">
+         {{ product.name }}
+      </h3>
+      <p class="text-center mb-1 text-lg font-bold">
+         ${{ product.unit_price }}
+      </p>
       <Ratings :rating="rating" />
-      <Button as-child>
-         <router-link
-            :to="{ name: 'SingleProduct', params: { productId: product.id } }"
-         >
-            See product
-         </router-link>
+      <Button @click.stop="addToCart" class="mt-2">
+         <font-awesome-icon icon="shopping-cart" class="mr-3 -ml-3" />Add to
+         cart
       </Button>
    </li>
 </template>
 
 <style scoped lang="scss">
-   @import "@/css/variables.scss";
-   li {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding-bottom: 1rem;
-      border-radius: 0.5rem;
-      background-color: $white;
-      overflow: hidden;
-      transition: all 0.15s ease-in;
-      &:hover {
-         box-shadow: 0 0 1rem 0.2rem $light-grey;
-         img {
-            transform: scale(1.1);
-         }
-      }
-      .img-container {
-         overflow: hidden;
-      }
+   li:hover {
       img {
-         object-fit: cover;
-         width: 100%;
-         height: 18rem;
-         transition: all 0.25s ease-out;
-      }
-      h3,
-      p {
-         text-align: center;
-         margin-bottom: 0.5rem;
-      }
-      h3 {
-         font-size: 1.2rem;
-         font-weight: 500;
-         margin-top: 0.5rem;
-      }
-      p {
-         font-size: 1.1rem;
-         font-weight: 700;
+         transform: scale(1.1);
       }
    }
 </style>

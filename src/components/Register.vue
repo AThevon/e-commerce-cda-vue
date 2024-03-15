@@ -41,9 +41,9 @@
 </script>
 
 <template>
-   <form @submit.prevent="submitForm">
-      <ul>
-         <li>
+   <form @submit.prevent="submitForm" class="mx-auto my-12 max-w-md">
+      <ul class="flex flex-col gap-4 mb-8">
+         <li class="flex flex-col">
             <label for="firstname">First Name</label>
             <input
                id="firstname"
@@ -53,7 +53,7 @@
                placeholder="Ex: John"
             />
          </li>
-         <li>
+         <li class="flex flex-col">
             <label for="lastname">Last Name</label>
             <input
                id="lastname"
@@ -63,7 +63,7 @@
                placeholder="Ex: Doe"
             />
          </li>
-         <li>
+         <li class="flex flex-col">
             <label for="birthdate">Birthdate</label>
             <input
                id="birthdate"
@@ -72,7 +72,7 @@
                required
             />
          </li>
-         <li>
+         <li class="flex flex-col">
             <label for="username">Pseudo</label>
             <input
                id="username"
@@ -82,7 +82,7 @@
                placeholder="Ex: JohnDoe37"
             />
          </li>
-         <li>
+         <li class="flex flex-col">
             <label for="description">Description</label>
             <textarea
                id="description"
@@ -91,7 +91,7 @@
                placeholder="Write your description here..."
             ></textarea>
          </li>
-         <li>
+         <li class="flex flex-col">
             <label for="question">What's your favorite game ?</label>
             <select id="question" v-model="user.question">
                <option value="" disabled>Select a game</option>
@@ -100,11 +100,13 @@
                <option value="other">Other</option>
             </select>
          </li>
-         <li class="checkbox">
+         <li class="flex-row items-center">
             <input id="loveVue" type="checkbox" v-model="user.loveVue" />
-            <label for="loveVue">Do you like Vue.js ?</label>
+            <label for="loveVue" class="mb-0 cursor-pointer pl-1 select-none"
+               >Do you like Vue.js ?</label
+            >
          </li>
-         <li>
+         <li class="flex flex-col">
             <label for="password">Password</label>
             <input
                id="password"
@@ -114,7 +116,7 @@
                placeholder="********"
             />
          </li>
-         <li>
+         <li class="flex flex-col">
             <label for="confirmPassword">Confirm password</label>
             <input
                id="confirmPassword"
@@ -128,34 +130,3 @@
       <button type="submit">Subscribe</button>
    </form>
 </template>
-
-<style scoped lang="scss">
-   @import "@/css/variables.scss";
-   form {
-      margin-block: 3rem;
-      display: flex;
-      flex-direction: column;
-      max-width: 24rem;
-      margin-inline: auto;
-      ul {
-         display: flex;
-         flex-direction: column;
-         gap: 1rem;
-         margin-bottom: 2rem;
-         li {
-            display: flex;
-            flex-direction: column;
-            &.checkbox {
-               flex-direction: row;
-               align-items: center;
-               label {
-                  margin-bottom: 0;
-                  cursor: pointer;
-                  padding-left: 0.2rem;
-                  user-select: none;
-               }
-            }
-         }
-      }
-   }
-</style>

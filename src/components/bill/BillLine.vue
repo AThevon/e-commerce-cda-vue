@@ -44,13 +44,12 @@
 </template>
 
 <style scoped lang="scss">
-   @import "@/css/variables.scss";
    li {
       width: 100%;
       display: grid;
       gap: 0.5rem;
       grid-template-columns: repeat(2, 1fr) repeat(2, 100px) 75px 150px;
-      border: 1px solid $light-grey;
+      border: 1px solid hsl(var(--light-grey));
       border-radius: 8px;
    }
 
@@ -58,7 +57,7 @@
    select {
       padding-inline: 0.5rem;
       &:focus {
-         border: 1.5px solid $secondary-color;
+         border: 1.5px solid hsl(var(--secondary));
       }
    }
 
@@ -73,6 +72,6 @@
    }
 
    input::placeholder {
-      color: $light-grey;
+      color: hsl(var(--light-grey));
    }
 </style>

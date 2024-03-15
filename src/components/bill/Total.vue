@@ -10,7 +10,9 @@
 </script>
 
 <template>
-   <div>
+   <div
+      class="mt-12 flex flex-col items-end gap-4 p-4 pr-12 border border-secondary"
+   >
       <p>
          Total HT : <span>{{ totalHT.toFixed(2) }}</span>
       </p>
@@ -24,29 +26,18 @@
 </template>
 
 <style scoped lang="scss">
-   @import "@/css/variables.scss";
-   div {
-      margin-top: 3rem;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 1rem;
-      padding: 1rem;
-      padding-right: 3rem;
-      border: 1px solid $secondary-color;
-      span {
-         position: relative;
-         color: $secondary-color;
-         font-weight: 700;
-         font-size: 1.2rem;
-         &::after {
-            content: "€";
-            position: absolute;
-            right: -.7rem;
-            bottom: .1rem;
-            font-size: 0.9rem;
-            color: $secondary-color;
-         }
+   span {
+      position: relative;
+      color: hsl(var(--secondary));
+      font-weight: 700;
+      font-size: 1.2rem;
+      &::after {
+         content: "€";
+         position: absolute;
+         right: -0.7rem;
+         bottom: 0.1rem;
+         font-size: 0.9rem;
+         color: hsl(var(--secondary));
       }
    }
 </style>

@@ -14,7 +14,3 @@
       <Register />
    </main>
 </template>
-
-<style scoped lang="scss">
-   @import "@/css/variables.scss";
-</style>

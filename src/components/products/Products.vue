@@ -13,73 +13,36 @@
          Button,
          ProductPagination,
       },
-      data() {
-         return {
-            nbShownProducts: 10,
-         };
-      },
       computed: {
          productStore() {
             return useProductStore();
          },
-         displayedProducts(): ProductType[] {
-            return this.productStore.products.slice(0, this.nbShownProducts);
-         },
-         lowestPriceProductIds(): number[] {
-            if (!this.productStore.products.length) return [];
-            const lowestPrice = Math.min(
-               ...this.productStore.products.map(
-                  (product: ProductType) => product.unit_price
-               )
-            );
-            return this.productStore.products
-               .filter(
-                  (product: ProductType) => product.unit_price === lowestPrice
-               )
-               .map((product: ProductType) => product.id);
-         },
-      },
-      methods: {
-         async fetchProductData() {
-            await this.productStore.fetchProducts();
-         },
-         calculateProductsPerPage() {
-            const cardWidth = 17.5 + 4; // 17.5rem card width + 5rem margin
-            const screenWidthInRem =
-               window.innerWidth /
-               parseFloat(getComputedStyle(document.documentElement).fontSize);
-            // Assuming each card takes about 17.5rem of width, adjust based on your actual card size and margins
-            this.nbShownProducts = Math.floor(screenWidthInRem / cardWidth);
-            // Ensure there's at least one product shown
-            this.nbShownProducts = Math.max(this.nbShownProducts, 1);
-         },
       },
       mounted() {
-         this.fetchProductData();
-         this.calculateProductsPerPage();
-         window.addEventListener("resize", this.calculateProductsPerPage);
-      },
-      beforeUnmount() {
-         window.removeEventListener("resize", this.calculateProductsPerPage);
+         this.productStore.fetchProducts();
       },
    });
 </script>
 
 <template>
    <div class="flex flex-col items-center md:px-20 px-0">
-      <ul>
+      <ul
+      >
          <ProductCard
-            v-for="product in displayedProducts"
+            v-for="product in productStore.paginatedProducts"
             :key="product.id"
-            :product="(product as ProductType)"
+            :product="product"
+            class="min-w-0 md:min-w-[17.5rem]"
          />
       </ul>
-      <ProductPagination />
+      <ProductPagination
+         v-model="productStore.currentPage"
+         @update:page="productStore.setPage"
+      />
    </div>
 </template>
 
 <style scoped lang="scss">
-   @import "@/css/variables.scss";
    ul {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));

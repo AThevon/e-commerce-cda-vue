@@ -126,8 +126,10 @@
 
 <template>
    <div>
-      <ul>
-         <li>
+      <ul
+         class="w-3/4 mx-auto grid grid-cols-2 gap-4 p-4 border border-gray-300 rounded-lg"
+      >
+         <li class="col-span-6 w-full text-center font-bold p-4 mb-4">
             <span>Nom</span>
             <span>Description</span>
             <span>Prix</span>
@@ -142,7 +144,7 @@
             @delete-line="deleteLine(index)"
          ></BillLine>
       </ul>
-      <div class="btn-wrapper">
+      <div class="mt-4 flex justify-center items-center gap-8">
          <Button @click="() => addLine('')">Add a row</Button>
          <Button @click="showModal">Add a template</Button>
          <Button
@@ -169,37 +171,11 @@
 </template>
 
 <style scoped lang="scss">
-   @import "@/css/variables.scss";
-
-   ul {
-      width: 75%;
-      margin-inline: auto;
+   ul li:first-child {
+      width: 100%;
       display: grid;
+      gap: 0.5rem;
       grid-template-columns: repeat(2, 1fr) repeat(2, 100px) 75px 150px;
-      padding: 1rem;
-      border: 1px solid $light-grey;
       border-radius: 8px;
-      li {
-         grid-column: span 6;
-         width: 100%;
-         text-align: center;
-         font-weight: bold;
-         padding: 1rem;
-         margin-bottom: 1rem;
-      }
-      li:first-child {
-         width: 100%;
-         display: grid;
-         gap: 0.5rem;
-         grid-template-columns: repeat(2, 1fr) repeat(2, 100px) 75px 150px;
-         border-radius: 8px;
-      }
-   }
-   .btn-wrapper {
-      margin-top: 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 2rem;
    }
 </style>

@@ -21,6 +21,15 @@ module.exports = {
             "2xl": "1400px",
          },
       },
+      colors: {
+         black: "hsl(var(--black))",
+         black2: "hsl(var(--black2))",
+         white: "hsl(var(--white))",
+         white2: "hsl(var(--white2))",
+         lightgray: "hsl(var(--light-gray))",
+         darkgray: "hsl(var(--dark-gray))",
+         red: "hsl(var(--red))",
+      },
       fontFamily: {
          sans: [
             "Poppins",
