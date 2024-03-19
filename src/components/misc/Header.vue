@@ -3,18 +3,28 @@
    import NavBar from "./NavBar.vue";
    import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
    import AccountPopover from "@/components/misc/AccountPopover.vue";
+   import Button from "@/components/ui/button/Button.vue";
 
    export default defineComponent({
       components: {
+         Button,
          NavBar,
          Avatar,
          AvatarImage,
          AvatarFallback,
          AccountPopover,
       },
+      data() {
+         return {
+            isUserConnected: false,
+         };
+      },
       methods: {
          isActiveLink(route: string) {
             return this.$route.path === route;
+         },
+         toggleUserConnected() {
+            this.isUserConnected = !this.isUserConnected;
          },
       },
    });
@@ -24,11 +34,24 @@
    <header
       class="bg-black2 relative text-white flex justify-between items-center px-12 h-20"
    >
-      <h1 class="font-main text-3xl font-bold uppercase">Vue.js</h1>
+      <h1
+         class="font-main text-3xl font-bold uppercase"
+         @click="toggleUserConnected"
+      >
+         Vue.js
+      </h1>
       <nav>
          <NavBar />
       </nav>
-      <div class="flex gap-4">
+      <div v-if="!isUserConnected" class="flex gap-4">
+         <Button variant="secondary" as-child>
+            <router-link to="/login">Login</router-link>
+         </Button>
+         <Button variant="secondary" as-child>
+            <router-link to="/signin">Sign in</router-link>
+         </Button>
+      </div>
+      <div v-else-if="isUserConnected" class="flex gap-4">
          <Avatar
             :class="
                isActiveLink('/cart')
