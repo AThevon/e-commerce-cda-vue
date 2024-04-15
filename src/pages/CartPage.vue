@@ -4,7 +4,7 @@
    import { useCartStore } from "@/stores/useCartStore";
    import Button from "@/components/ui/button/Button.vue";
    import { formatPrice } from "@/lib/utils";
-import { toast } from "@/components/ui/toast";
+   import { toast } from "@/components/ui/toast";
 
    export default defineComponent({
       name: "CartPage",
