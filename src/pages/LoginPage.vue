@@ -34,7 +34,8 @@
 </script>
 
 <template>
-   <div class="flex flex-col gap-8 mx-auto mt-40 w-1/3">
+   <div class="flex flex-col gap-3 mx-auto mt-40 w-[20rem]">
+      <h1 class="text-3xl font-bold text-center uppercase">Login</h1>
       <form class="w-full space-y-4" @submit="onSubmit">
          <FormField v-slot="{ componentField }" name="email">
             <FormItem v-auto-animate>
@@ -101,5 +102,14 @@
             Google
          </router-link>
       </Button>
+      <router-link
+         to="/signin"
+         class="group relative text-center text-sm mt-2 w-[70%] mx-auto active:scale-95 transition-all duration-200 ease-in-out"
+      >
+         Don't have an account ? <strong>Register</strong>
+         <span
+            class="absolute left-1/2 bottom-[-1px] -translate-x-1/2 bg-red/.2 border-b-2 w-0 border-black group-hover:w-[90%] h-full transition-all duration-200 ease-in-out"
+         ></span>
+      </router-link>
    </div>
 </template>

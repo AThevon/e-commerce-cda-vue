@@ -17,7 +17,7 @@ const routes = [
       name: "SingleProduct",
       component: SingleProductPage,
    },
-   { path: "/bill", name: "Bill", component: BillPage },
+  //  { path: "/bill", name: "Bill", component: BillPage },
    { path: "/contact", name: "Contact", component: ContactPage },
    { path: "/cart", name: "Cart", component: CartPage },
    { path: "/login", name: "Login", component: LoginPage },

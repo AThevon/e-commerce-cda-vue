@@ -11,9 +11,9 @@
 </script>
 
 <template>
-   <div>
+   <div class="flex flex-col min-h-screen">
       <Toaster />
       <Header />
-      <router-view></router-view>
+      <router-view class="flex-1 w-full"></router-view>
    </div>
 </template>

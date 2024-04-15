@@ -133,7 +133,7 @@
                </ul>
             </NavigationMenuContent>
          </NavigationMenuItem>
-         <NavigationMenuItem>
+         <!-- <NavigationMenuItem>
             <NavigationMenuTrigger>Bills</NavigationMenuTrigger>
             <NavigationMenuContent>
                <ul class="flex flex-col w-[300px] gap-3 p-4">
@@ -148,7 +148,7 @@
                   </ListItem>
                </ul>
             </NavigationMenuContent>
-         </NavigationMenuItem>
+         </NavigationMenuItem> -->
          <NavigationMenuItem>
             <NavigationMenuLink
                :active="isActiveLink('/contact')"
