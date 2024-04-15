@@ -1,4 +1,5 @@
-+<script lang="ts">
++
+<script lang="ts">
    import { defineComponent } from "vue";
    import ListItem from "@/components/misc/ListItem.vue";
    import {
@@ -60,24 +61,27 @@
                   grid: "row-span-2",
                },
             ],
-            billElements: [
+            customOrderElements: [
                {
                   title: "New",
-                  href: "/bill",
-                  description: "Create a new bill",
+                  href: "/custom-order",
+                  description: "Create a new custom order",
                },
                {
-                  title: "All Bills",
-                  href: "/bill",
-                  description: "Browse all the bills",
+                  title: "Showcase",
+                  href: "/custom-orders-showcase",
+                  description: "Browse custom orders made by others",
                },
             ],
             navigationMenuTriggerStyle,
          };
       },
       methods: {
-         isActiveLink(href: string) {
+         isActivePath(href: string) {
             return this.$route.path === href;
+         },
+         isActivePathStartsWith(href: string) {
+            return this.$route.path.startsWith(href);
          },
       },
    });
@@ -88,7 +92,7 @@
       <NavigationMenuList>
          <NavigationMenuItem>
             <NavigationMenuLink
-               :active="isActiveLink('/')"
+               :active="isActivePath('/')"
                href="/"
                :class="navigationMenuTriggerStyle()"
             >
@@ -98,7 +102,7 @@
          <NavigationMenuItem>
             <NavigationMenuTrigger
                :class="
-                  isActiveLink('/products')
+                  isActivePathStartsWith('/products')
                      ? 'bg-accent text-accent-foreground'
                      : null
                "
@@ -133,12 +137,19 @@
                </ul>
             </NavigationMenuContent>
          </NavigationMenuItem>
-         <!-- <NavigationMenuItem>
-            <NavigationMenuTrigger>Bills</NavigationMenuTrigger>
+         <NavigationMenuItem>
+            <NavigationMenuTrigger
+               :class="
+                  isActivePathStartsWith('/custom-order')
+                     ? 'bg-accent text-accent-foreground'
+                     : null
+               "
+               >Custom Order</NavigationMenuTrigger
+            >
             <NavigationMenuContent>
-               <ul class="flex flex-col w-[300px] gap-3 p-4">
+               <ul class="flex flex-col w-[400px] gap-3 p-4">
                   <ListItem
-                     v-for="element in billElements"
+                     v-for="element in customOrderElements"
                      :key="element.title"
                      :title="element.title"
                      :href="element.href"
@@ -148,15 +159,6 @@
                   </ListItem>
                </ul>
             </NavigationMenuContent>
-         </NavigationMenuItem> -->
-         <NavigationMenuItem>
-            <NavigationMenuLink
-               :active="isActiveLink('/contact')"
-               href="/contact"
-               :class="navigationMenuTriggerStyle()"
-            >
-               Contact
-            </NavigationMenuLink>
          </NavigationMenuItem>
       </NavigationMenuList>
    </NavigationMenu>

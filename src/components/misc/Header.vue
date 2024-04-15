@@ -20,8 +20,8 @@
          };
       },
       methods: {
-         isActiveLink(route: string) {
-            return this.$route.path === route;
+         isActivePathStartsWith(route: string) {
+            return this.$route.path.startsWith(route);
          },
          toggleUserConnected() {
             this.isUserConnected = !this.isUserConnected;
@@ -54,7 +54,7 @@
       <div v-else-if="isUserConnected" class="flex gap-4">
          <Avatar
             :class="
-               isActiveLink('/cart')
+               isActivePathStartsWith('/cart')
                   ? 'outline outline-2 outline-offset-2 outline-white/90'
                   : ''
             "
@@ -71,7 +71,7 @@
          <AccountPopover>
             <Avatar
                :class="
-                  isActiveLink('/user')
+                  isActivePathStartsWith('/user')
                      ? 'outline outline-2 outline-offset-2 outline-white/90 '
                      : ''
                "

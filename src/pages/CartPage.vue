@@ -5,16 +5,27 @@
    import Button from "@/components/ui/button/Button.vue";
    import { formatPrice } from "@/lib/utils";
    import { toast } from "@/components/ui/toast";
+   import {
+      AlertDialog,
+      AlertDialogTrigger,
+   } from "@/components/ui/alert-dialog";
+   import AlertDialogCart from "@/components/cart/AlertDialogCart.vue";
 
    export default defineComponent({
       name: "CartPage",
       components: {
          Button,
          CartProduct,
+         AlertDialog,
+         AlertDialogCart,
+         AlertDialogTrigger,
       },
       computed: {
          cartStore() {
             return useCartStore();
+         },
+         isCartEmpty() {
+            return this.cartStore.cartQuantity === 0;
          },
          total() {
             return formatPrice(this.cartStore.cartTotal);
@@ -24,13 +35,19 @@
          },
       },
       methods: {
+         clearCart() {
+            this.cartStore.clearCart();
+            toast({
+               title: "Cart cleared",
+               description: "Your cart has been cleared",
+            });
+         },
          checkout() {
             // this.cartStore.checkout();
          },
       },
    });
 </script>
-
 
 <template>
    <main class="flex flex-col items-center">
@@ -39,7 +56,10 @@
       >
          Cart
       </h1>
-      <div class="grid grid-cols-5 w-full px-32 gap-6 my-10">
+      <div
+         v-if="!isCartEmpty"
+         class="grid grid-cols-5 w-full px-32 gap-6 my-10"
+      >
          <ul class="w-full col-span-3 flex flex-col gap-6">
             <li
                v-for="cartProduct in cartStore.cart"
@@ -63,14 +83,31 @@
 
                <h3 class="text-2xl font-bold">Total</h3>
                <p class="text-3xl font-bold">{{ total }}</p>
-               <Button
-                  class="bg-primary text-white font-bold py-2 px-4 rounded-lg mt-4"
-                  @click="cartStore.checkout"
-               >
-                  Checkout
-               </Button>
+               <div class="w-full grid grid-cols-2 gap-1">
+                  <AlertDialog>
+                     <AlertDialogTrigger as-child>
+                        <Button
+                           variant="destructive"
+                           class="text-white font-bold py-2 px-4 rounded-lg mt-4"
+                        >
+                           Clear cart
+                        </Button>
+                     </AlertDialogTrigger>
+                     <AlertDialogCart :action="clearCart" />
+                  </AlertDialog>
+
+                  <Button
+                     class="bg-primary text-white font-bold py-2 px-4 rounded-lg mt-4"
+                     @click="checkout"
+                  >
+                     Checkout
+                  </Button>
+               </div>
             </div>
          </div>
+      </div>
+      <div v-else>
+         <h2 class="text-2xl font-bold">Your cart is empty</h2>
       </div>
    </main>
 </template>

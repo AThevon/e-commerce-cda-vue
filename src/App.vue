@@ -14,6 +14,6 @@
    <div class="flex flex-col min-h-screen">
       <Toaster />
       <Header />
-      <router-view class="flex-1 w-full"></router-view>
+      <router-view class="flex-1"></router-view>
    </div>
 </template>

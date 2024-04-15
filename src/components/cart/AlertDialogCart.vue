@@ -32,7 +32,7 @@
       <AlertDialogHeader>
          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the product from cart
+            This action cannot be undone. Do you want to continue ?
          </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>

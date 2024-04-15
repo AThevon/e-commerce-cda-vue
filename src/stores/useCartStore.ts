@@ -66,6 +66,10 @@ export const useCartStore = defineStore("cart", {
       saveCart() {
          localStorage.setItem("cart", JSON.stringify(this.cart));
       },
+      clearCart() {
+         this.cart = [];
+         this.saveCart();
+      },
       checkout() {
          // Call API to checkout
          // Clear cart
