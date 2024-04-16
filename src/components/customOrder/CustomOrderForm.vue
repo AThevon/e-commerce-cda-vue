@@ -12,19 +12,36 @@
          ToggleGroupItem,
       },
       data() {
-         return {
+        return {
             form: {
-               structure: StructureOptions.PLATE,
-               files: [],
-               message: "",
+                structure: StructureOptions.PLATE,
+                files: [] as File[],
+                message: "",
             },
+            filePreviews: [] as (string | null)[],
             StructureOptions,
-         };
+        };
+    },
+      computed: {
+         isFormValid() {
+            return this.form.structure && this.form.files.length && this.form.message;
+         },
       },
       methods: {
          submitForm() {
             console.log(this.form);
          },
+         handleFileUpload(event: Event) {
+            const target = event.target as HTMLInputElement;
+            if (target.files) {
+                const files = Array.from(target.files);
+                this.form.files = files;
+                this.filePreviews = files.map(file => {
+                    if (!file.type.startsWith('image/')) { return null; }
+                    return URL.createObjectURL(file);
+                });
+            }
+        },
       },
       watch: {
          form: {
@@ -38,41 +55,60 @@
 </script>
 
 <template>
-   <form @submit.prevent="submitForm">
-      <ToggleGroup type="single">
+   <form
+      @submit.prevent="submitForm"
+      class="flex flex-col gap-7 justify-center items-center mx-auto px-20 mt-12"
+   >
+      <ToggleGroup type="single" v-model="form.structure" class="flex gap-5">
          <ToggleGroupItem
             :value="StructureOptions.PLATE"
-            v-model="form.structure"
-            class="h-[10rem] w-[8rem] p-5"
+            class="h-[10rem] w-[8rem] p-5 flex flex-col gap-3 items-center justify-center"
          >
-            <img src="/assets/icon-totem.png" alt="" class="object-contain" />
+            <img src="/assets/icon-cadre.png" alt="" class="object-contain" />
+            <h3 class="text-md uppercase font-bold">Plaque</h3>
          </ToggleGroupItem>
          <ToggleGroupItem
             :value="StructureOptions.TOTEM"
-            v-model="form.structure"
-            class="h-[10rem] w-[8rem] p-5"
+            class="h-[10rem] w-[8rem] p-5 flex flex-col gap-3 items-center justify-center"
          >
             <img src="/assets/icon-totem.png" alt="" class="object-contain" />
+            <h3 class="text-md uppercase font-bold">Totem</h3>
          </ToggleGroupItem>
          <ToggleGroupItem
             :value="StructureOptions.LED"
-            v-model="form.structure"
-            class="h-[10rem] w-[8rem] p-5"
+            class="h-[10rem] w-[8rem] p-5 flex flex-col gap-3 items-center justify-center"
          >
-            <img src="/assets/icon-totem.png" alt="" class="object-contain" />
+            <img src="/assets/icon-led.png" alt="" class="object-contain" />
+            <h3 class="text-md uppercase font-bold">LED</h3>
          </ToggleGroupItem>
          <ToggleGroupItem
             :value="StructureOptions.CUSTOM"
-            v-model="form.structure"
-            class="h-[10rem] w-[8rem] p-5"
+            class="h-[10rem] w-[8rem] p-5 flex flex-col gap-3 items-center justify-center"
          >
-            <img src="/assets/icon-totem.png" alt="" class="object-contain" />
+            <img src="/assets/icon-led.png" alt="" class="object-contain" />
+            <h3 class="text-md uppercase font-bold">Custom</h3>
          </ToggleGroupItem>
       </ToggleGroup>
+      <input
+         type="file"
+         multiple
+         accept="image/*"
+         @change="handleFileUpload"
+         class="w-[40rem] p-3 border border-gray-300 rounded-md"
+      />
+      <div v-if="filePreviews.length > 0" class="grid grid-cols-3 gap-4">
+         <img
+            v-for="preview in filePreviews"
+            :src="preview ? preview : undefined"
+            :key="preview ? preview : 'no-preview'"
+            class="w-full h-32 object-cover rounded-md"
+         />
+      </div>
       <textarea
          v-model="form.message"
          placeholder="Write a message here..."
+         class="w-[40rem] h-[10rem] p-3 border border-gray-300 rounded-md resize-none"
       ></textarea>
-      <Button type="submit">Submit</Button>
+      <Button type="submit" class="">Submit</Button>
    </form>
 </template>

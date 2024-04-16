@@ -4,6 +4,7 @@
    import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
    import AccountPopover from "@/components/misc/AccountPopover.vue";
    import Button from "@/components/ui/button/Button.vue";
+   import { useUserStore } from "@/stores/useUserStore";
 
    export default defineComponent({
       components: {
@@ -14,17 +15,20 @@
          AvatarFallback,
          AccountPopover,
       },
-      data() {
-         return {
-            isUserConnected: false,
-         };
+      computed: {
+         userStore() {
+            return useUserStore();
+         },
+         isLoggedIn() {
+            return this.userStore.isLoggedIn;
+         },
       },
       methods: {
          isActivePathStartsWith(route: string) {
             return this.$route.path.startsWith(route);
          },
-         toggleUserConnected() {
-            this.isUserConnected = !this.isUserConnected;
+         toggleLogin() {
+            this.userStore.toggleLogin();
          },
       },
    });
@@ -32,18 +36,18 @@
 
 <template>
    <header
-      class="bg-black2 relative text-white flex justify-between items-center px-12 h-20"
+      class="bg-black2 relative text-white flex justify-between items-center px-5 h-20"
    >
       <h1
          class="font-main text-3xl font-bold uppercase"
-         @click="toggleUserConnected"
+         @click="toggleLogin"
       >
-         Vue.js
+         Woodies Factory
       </h1>
       <nav>
          <NavBar />
       </nav>
-      <div v-if="!isUserConnected" class="flex gap-4">
+      <div v-if="!isLoggedIn" class="flex gap-4">
          <Button variant="secondary" as-child>
             <router-link to="/login">Login</router-link>
          </Button>
@@ -51,7 +55,7 @@
             <router-link to="/signin">Sign in</router-link>
          </Button>
       </div>
-      <div v-else-if="isUserConnected" class="flex gap-4">
+      <div v-else class="flex gap-4">
          <Avatar
             :class="
                isActivePathStartsWith('/cart')
