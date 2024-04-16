@@ -20,6 +20,12 @@ export const useCartStore = defineStore("cart", {
                acc + cartProduct.product.unit_price * cartProduct.quantity,
             0
          ) * 0.8,
+      cartTaxes: (state) =>
+         state.cart.reduce(
+            (acc, cartProduct) =>
+               acc + cartProduct.product.unit_price * cartProduct.quantity,
+            0
+         ) * 0.2,
       cartQuantity: (state) =>
          state.cart.reduce((acc, cartProduct) => acc + cartProduct.quantity, 0),
    },

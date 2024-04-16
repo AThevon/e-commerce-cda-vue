@@ -17,27 +17,51 @@
          productStore() {
             return useProductStore();
          },
+         paginatedProducts() {
+            return this.productStore.paginatedProducts;
+         },
+         currentPage: {
+            get() {
+               return this.productStore.currentPage;
+            },
+            set(value: any) {
+               this.productStore.setPage(value);
+            },
+         },
+      },
+      methods: {
+         fetchProducts() {
+            this.productStore.fetchProducts();
+         },
+         handleResize() {
+            console.log("Resizing..."); // Check if this logs on window resize
+            this.productStore.adjustProductsPerPage();
+         },
       },
       mounted() {
-         this.productStore.fetchProducts();
+         this.fetchProducts();
+         this.productStore.adjustProductsPerPage();
+         window.addEventListener("resize", this.handleResize);
+      },
+      beforeUnmount() {
+         window.removeEventListener("resize", this.handleResize);
       },
    });
 </script>
 
 <template>
    <div class="flex flex-col items-center md:px-20 px-0">
-      <ul
-      >
+      <ul>
          <ProductCard
-            v-for="product in productStore.paginatedProducts"
+            v-for="product in paginatedProducts"
             :key="product.id"
             :product="product"
             class="min-w-0 md:min-w-[17.5rem]"
          />
       </ul>
       <ProductPagination
-         v-model="productStore.currentPage"
-         @update:page="productStore.setPage"
+         v-model="currentPage"
+         @update:page="(value) => (currentPage = value)"
       />
    </div>
 </template>
@@ -51,7 +75,7 @@
          grid-template-columns: 1fr;
       }
       width: 100%;
-      max-width: 100rem;
+      max-width: 120rem;
       margin-inline: 4rem;
       margin-block: 3rem 5rem;
    }

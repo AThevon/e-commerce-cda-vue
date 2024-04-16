@@ -33,6 +33,9 @@
          ht() {
             return formatPrice(this.cartStore.cartHT);
          },
+         taxes() {
+            return formatPrice(this.cartStore.cartTaxes);
+         }, 
       },
       methods: {
          clearCart() {
@@ -79,6 +82,7 @@
                      Total items: {{ cartStore.cartQuantity }}
                   </p>
                   <p class="text-md">HT: {{ ht }}</p>
+                  <p class="text-md">Taxes: {{ taxes }}</p>
                </div>
 
                <h3 class="text-2xl font-bold">Total</h3>

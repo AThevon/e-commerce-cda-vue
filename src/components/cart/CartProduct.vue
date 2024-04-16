@@ -54,7 +54,7 @@
       />
       <div class="col-span-3 flex flex-col gap-4 justify-between">
          <h2 class="text-2xl font-bold">{{ cartProduct.product.name }}</h2>
-         <p class="text-lg mt-auto">{{ productPrice }}</p>
+         <p class="text-lg mb-auto">{{ productPrice }}</p>
          <div class="flex w-[6.5rem] justify-between items-center">
             <AlertDialog v-if="cartProduct.quantity <= 1">
                <AlertDialogTrigger as-child>

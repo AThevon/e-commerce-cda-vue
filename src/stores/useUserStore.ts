@@ -8,6 +8,9 @@ export const useUserStore = defineStore("user", {
       isLoggedIn: false,
    }),
    actions: {
+      toggleLogin() {
+         this.isLoggedIn = !this.isLoggedIn;
+      },
       async login(credentials: {
          email: UserType["email"];
          password: UserType["password"];
