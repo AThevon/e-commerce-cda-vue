@@ -14,9 +14,15 @@
       data() {
         return {
             form: {
+<<<<<<< HEAD
                 structure: StructureOptions.PLATE,
                 files: [] as File[],
                 message: "",
+=======
+               structure: StructureOptions.PLATE,
+               files: [] as File[],
+               message: "",
+>>>>>>> a86b6555e36310aaa872001c01273c2cfbb857f9
             },
             filePreviews: [] as (string | null)[],
             StructureOptions,
@@ -27,6 +33,15 @@
             return this.form.structure && this.form.files.length && this.form.message;
          },
       },
+      computed: {
+         isFormValid() {
+            return (
+               this.form.structure &&
+               this.form.files.length &&
+               this.form.message
+            );
+         },
+      },
       methods: {
          submitForm() {
             console.log(this.form);
@@ -34,6 +49,7 @@
          handleFileUpload(event: Event) {
             const target = event.target as HTMLInputElement;
             if (target.files) {
+<<<<<<< HEAD
                 const files = Array.from(target.files);
                 this.form.files = files;
                 this.filePreviews = files.map(file => {
@@ -42,12 +58,25 @@
                 });
             }
         },
+=======
+               const files = Array.from(target.files);
+               this.form.files = files;
+               this.filePreviews = files.map((file) => {
+                  if (!file.type.startsWith("image/")) {
+                     return null;
+                  }
+                  return URL.createObjectURL(file);
+               });
+            }
+         },
+>>>>>>> a86b6555e36310aaa872001c01273c2cfbb857f9
       },
       watch: {
          form: {
             deep: true,
             handler() {
-               console.log(this.form);
+               this.form.structure =
+                  this.form.structure || StructureOptions.PLATE;
             },
          },
       },
@@ -59,7 +88,11 @@
       @submit.prevent="submitForm"
       class="flex flex-col gap-7 justify-center items-center mx-auto px-20 mt-12"
    >
+<<<<<<< HEAD
       <ToggleGroup type="single" v-model="form.structure" class="flex gap-5">
+=======
+      <ToggleGroup type="single" v-model="form.structure" class="w-[34rem] flex justify-between">
+>>>>>>> a86b6555e36310aaa872001c01273c2cfbb857f9
          <ToggleGroupItem
             :value="StructureOptions.PLATE"
             class="h-[10rem] w-[8rem] p-5 flex flex-col gap-3 items-center justify-center"
