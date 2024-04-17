@@ -29,6 +29,7 @@ module.exports = {
          lightgray: "hsl(var(--light-gray))",
          darkgray: "hsl(var(--dark-gray))",
          red: "hsl(var(--red))",
+         green: "hsl(var(--green))",
       },
       fontFamily: {
          sans: [

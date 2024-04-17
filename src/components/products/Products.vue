@@ -1,6 +1,5 @@
 <script lang="ts">
    import { defineComponent } from "vue";
-   import type { ProductType } from "@/types/ProductType";
    import ProductCard from "@/components/products/ProductCard.vue";
    import { Button } from "../ui/button";
    import { useProductStore } from "@/stores/useProductStore";

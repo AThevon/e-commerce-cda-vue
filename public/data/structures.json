@@ -1,0 +1,22 @@
+[
+   {
+      "name": "plate",
+      "label": "Plate",
+      "img": "/assets/icon-cadre.png"
+   },
+   {
+      "name": "totem",
+      "label": "Totem",
+      "img": "/assets/icon-totem.png"
+   },
+   {
+      "name": "led",
+      "label": "LED",
+      "img": "/assets/icon-led.png"
+   },
+   {
+      "name": "custom",
+      "label": "Custom",
+      "img": "/assets/icon-led.png"
+   }
+]
