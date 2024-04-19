@@ -114,7 +114,7 @@
             Register
          </Button>
       </form>
-      <router-link
+      <RouterLink
          to="/login"
          class="group relative text-center text-sm mt-2 w-[70%] mx-auto active:scale-95 transition-all duration-200 ease-in-out"
       >
@@ -122,6 +122,6 @@
          <span
             class="absolute left-1/2 bottom-[-1px] -translate-x-1/2 bg-red/.2 border-b-2 w-0 border-black group-hover:w-[90%] h-full transition-all duration-200 ease-in-out"
          ></span>
-      </router-link>
+      </RouterLink>
    </div>
 </template>

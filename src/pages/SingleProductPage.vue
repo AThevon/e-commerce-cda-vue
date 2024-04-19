@@ -16,14 +16,12 @@
          AspectRatio,
       },
       computed: {
-         // Access product store and cart store
          productStore() {
             return useProductStore();
          },
          cartStore() {
             return useCartStore();
          },
-         // Find the current product based on the route parameter
          product() {
             const productId = this.$route.params.productId;
             return (
@@ -31,10 +29,6 @@
                   (p) => String(p.id) === productId
                ) || ({} as ProductType)
             );
-         },
-         rating() {
-            if (!this.product) return 0;
-            return (this.product.rating / 5) * 100;
          },
       },
       methods: {
@@ -91,7 +85,7 @@
    <div>
       <div class="flex items-center justify-between my-8 px-12">
          <Button as-child>
-            <router-link :to="{ name: 'Products' }">Back</router-link>
+            <RouterLink :to="{ name: 'Products' }">Back</RouterLink>
          </Button>
          <h2 class="text-center font-bold text-lg uppercase">
             {{ product.name }}
@@ -102,14 +96,14 @@
          class="absolute top-1/2 transform -translate-y-1/2 rounded-md text-lg font-bold py-6 px-8 left-20 transition-all duration-300 hover:py-7 hover:px-9 hover:left-[4.3rem] active:scale-95"
          @click="navigateToProduct('previous')"
       >
-         <font-awesome-icon icon="arrow-left" />
+         <FontAwesomeIcon icon="arrow-left" />
       </Button>
       <Button
          size="icon"
          class="absolute top-1/2 transform -translate-y-1/2 rounded-md text-lg font-bold py-6 px-8 right-20 transition-all duration-300 hover:py-7 hover:px-9 hover:right-[4.3rem] active:scale-95"
          @click="navigateToProduct('next')"
       >
-         <font-awesome-icon icon="arrow-right" />
+         <FontAwesomeIcon icon="arrow-right" />
       </Button>
       <div
          id="main-container"
@@ -128,10 +122,10 @@
             <h3 class="text-3xl font-main">{{ product.name }}</h3>
             <p class="text-xl">{{ product.description }}</p>
             <p class="text-2xl font-bold">{{ product.unit_price }}€</p>
-            <Ratings :rating="rating" />
+            <Ratings :rating="product.woodies" />
             <Button @click.stop="addToCart" class="mt-2">
-               <font-awesome-icon icon="shopping-cart" class="mr-3 -ml-3" />Add
-               to cart
+               <FontAwesomeIcon icon="shopping-cart" class="mr-3 -ml-3" />Add to
+               cart
             </Button>
          </div>
       </div>

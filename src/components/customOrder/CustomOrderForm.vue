@@ -81,14 +81,14 @@
          :class="filePreviews.length > 0 ? 'bg-green' : 'bg-black2'"
       >
          <div v-if="filePreviews.length > 0">
-            <font-awesome-icon icon="circle-check" class="mr-2 text-white" />
+            <FontAwesomeIcon icon="circle-check" class="mr-2 text-white" />
             {{ filePreviews.length }} Image{{
                filePreviews.length != 1 ? "s" : ""
             }}
             Uploaded
          </div>
          <div v-else>
-            <font-awesome-icon icon="upload" class="mr-2 text-white" /> Upload
+            <FontAwesomeIcon icon="upload" class="mr-2 text-white" /> Upload
             your images
          </div>
       </label>

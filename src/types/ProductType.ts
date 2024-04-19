@@ -9,5 +9,5 @@ export type ProductType = {
    height: number;
    weight: number;
    created_at: string;
-   rating: number;
+   woodies: number;
 };

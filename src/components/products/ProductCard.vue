@@ -9,15 +9,10 @@
 
    export default defineComponent({
       props: {
-         product: Object as PropType<ProductType>,
+         product: { type: Object as PropType<ProductType>, required: true },
       },
       components: { Ratings, Button },
       computed: {
-         rating() {
-            if (!this.product || this.product.rating == null) return 0;
-            let roundedRating = Math.round(this.product.rating * 10) / 10;
-            return (roundedRating / 5) * 100;
-         },
          cartStore() {
             return useCartStore();
          },
@@ -73,10 +68,9 @@
       <p class="text-center mb-1 text-lg font-bold">
          ${{ product.unit_price }}
       </p>
-      <Ratings :rating="rating" />
+      <Ratings :rating="product.woodies" />
       <Button @click.stop="addToCart" class="mt-2">
-         <font-awesome-icon icon="shopping-cart" class="mr-3 -ml-3" />Add to
-         cart
+         <FontAwesomeIcon icon="shopping-cart" class="mr-3 -ml-3" />Add to cart
       </Button>
    </li>
 </template>

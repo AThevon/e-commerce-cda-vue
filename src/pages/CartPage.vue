@@ -24,8 +24,8 @@
          cartStore() {
             return useCartStore();
          },
-         isCartEmpty() {
-            return this.cartStore.cartQuantity === 0;
+         cartProducts() {
+            return this.cartStore.cartQuantity;
          },
          total() {
             return formatPrice(this.cartStore.cartTotal);
@@ -60,7 +60,7 @@
          Cart
       </h1>
       <div
-         v-if="!isCartEmpty"
+         v-if="cartProducts > 0"
          class="grid grid-cols-5 w-full px-32 gap-6 my-10"
       >
          <ul class="w-full col-span-3 flex flex-col gap-6">
