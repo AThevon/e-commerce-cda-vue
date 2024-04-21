@@ -3,7 +3,7 @@
    import { toTypedSchema } from "@vee-validate/zod";
    import * as z from "zod";
    import { vAutoAnimate } from "@formkit/auto-animate/vue";
-
+   import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
    import { Button } from "@/components/ui/button";
    import {
       FormControl,
@@ -29,6 +29,7 @@
    const onSubmit = handleSubmit((values) => {
       toast({
          title: "You submitted the following values:",
+         description: JSON.stringify(values, null, 2),
       });
    });
 </script>
@@ -78,7 +79,7 @@
                v-if="false"
                class="mr-2 h-4 w-4 animate-spin"
             />
-            Login with Email
+            Connection
          </Button>
       </form>
       <div class="relative">
@@ -98,7 +99,7 @@
                v-if="false"
                class="mr-2 h-4 w-4 animate-spin"
             />
-            <img v-else src="" class="mr-2 h-4 w-4" />
+            <img src="/assets/logo-google.svg" class="mr-2 w-4 h-4"/>
             Google
          </RouterLink>
       </Button>

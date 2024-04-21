@@ -44,7 +44,10 @@
    <header
       class="bg-black2 relative text-white flex justify-between items-center px-5 h-20"
    >
-      <h1 class="font-main text-3xl font-bold uppercase" @click="toggleLogin">
+      <h1
+         class="font-main text-3xl font-bold uppercase mr-4"
+         @click="toggleLogin"
+      >
          Woodies Factory
       </h1>
       <nav>
