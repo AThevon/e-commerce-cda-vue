@@ -33,7 +33,6 @@
             this.productStore.fetchProducts();
          },
          handleResize() {
-            console.log("Resizing..."); // Check if this logs on window resize
             this.productStore.adjustProductsPerPage();
          },
       },
@@ -50,7 +49,9 @@
 
 <template>
    <div class="flex flex-col items-center md:px-20 px-0">
-      <ul>
+      <ul
+         class="grid grid-cols-[repeat(auto-fill,minmax(17.5rem,1fr))] gap-8 w-full max-w-[120rem] mx-16 my-12 mb-20"
+      >
          <ProductCard
             v-for="product in paginatedProducts"
             :key="product.id"
@@ -64,18 +65,3 @@
       />
    </div>
 </template>
-
-<style scoped lang="scss">
-   ul {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
-      gap: 2rem;
-      @media screen and (max-width: 768px) {
-         grid-template-columns: 1fr;
-      }
-      width: 100%;
-      max-width: 120rem;
-      margin-inline: 4rem;
-      margin-block: 3rem 5rem;
-   }
-</style>

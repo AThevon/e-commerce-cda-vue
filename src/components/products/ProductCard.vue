@@ -68,10 +68,13 @@
       <p class="text-center mb-1 text-lg font-bold">
          ${{ product.unit_price }}
       </p>
-      <Ratings :rating="product.woodies" />
-      <Button @click.stop="addToCart" class="mt-2">
-         <FontAwesomeIcon icon="shopping-cart" class="mr-3 -ml-3" />Add to cart
-      </Button>
+      <div class="mt-2 w-full flex flex-col items-center gap-2 px-4">
+         <Ratings :rating="product.woodies" />
+         <Button @click.stop="addToCart">
+            <FontAwesomeIcon icon="shopping-cart" class="mr-3 -ml-3" />Add to
+            cart
+         </Button>
+      </div>
    </li>
 </template>
 

@@ -46,7 +46,7 @@
             }
          },
          submitForm() {
-            console.log(this.customOrderStore.form);
+            alert(this.customOrderStore.form);
          },
          openModal(src: string) {
             this.customOrderStore.openModal(src);

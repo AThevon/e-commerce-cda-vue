@@ -4,7 +4,6 @@ import HomePage from "@/pages/HomePage.vue";
 import CustomOrderPage from "@/pages/CustomOrderPage.vue";
 import ProductsPage from "@/pages/ProductsPage.vue";
 import SingleProductPage from "@/pages/SingleProductPage.vue";
-import BillPage from "@/pages/BillPage.vue";
 import CartPage from "@/pages/CartPage.vue";
 import LoginPage from "@/pages/LoginPage.vue";
 import SignInPage from "@/pages/SignInPage.vue";
@@ -17,7 +16,6 @@ const routes = [
       name: "SingleProduct",
       component: SingleProductPage,
    },
-  //  { path: "/bill", name: "Bill", component: BillPage },
    { path: "/custom-order", name: "CustomOrder", component: CustomOrderPage },
    { path: "/cart", name: "Cart", component: CartPage },
    { path: "/login", name: "Login", component: LoginPage },

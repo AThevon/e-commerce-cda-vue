@@ -31,18 +31,28 @@ export const useProductStore = defineStore("product", {
          }
       },
       adjustProductsPerPage() {
+         const breakpoints = [
+            { width: 1064, products: 2 },
+            { width: 1376, products: 3 },
+            { width: 1688, products: 4 },
+            { width: 2000, products: 5 },
+         ];
+
          const width = window.innerWidth;
-         if (width < 1064) {
-            this.productsPerPage = 2;
-         } else if (width < 1376) {
-            this.productsPerPage = 3;
-         } else if (width < 1688) {
-            this.productsPerPage = 4;
-         } else if (width < 2000) {
-            this.productsPerPage = 5;
-         } else {
-            this.productsPerPage = 6;
+         this.productsPerPage = 6;
+
+         for (const breakpoint of breakpoints) {
+            if (width < breakpoint.width) {
+               this.productsPerPage = breakpoint.products;
+               break;
+            }
          }
+      },
+      addWoodie(product: ProductType) {
+         // Add a woodie here by passing the product id with post method
+      },
+      removeWoodie(product: ProductType) {
+         // Remove a woodie here by passing the product id with delete method
       },
    },
 });

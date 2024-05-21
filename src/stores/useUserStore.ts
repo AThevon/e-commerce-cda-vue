@@ -5,7 +5,7 @@ import type { UserType } from "@/types/UserType";
 export const useUserStore = defineStore("user", {
    state: () => ({
       user: null,
-      isLoggedIn: false,
+      isLoggedIn: true,
    }),
    actions: {
       toggleLogin() {

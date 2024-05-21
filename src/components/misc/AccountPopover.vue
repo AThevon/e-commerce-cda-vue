@@ -15,12 +15,12 @@
       </PopoverTrigger>
       <PopoverContent class="w-50 mt-2 mr-6">
          <ul class="grid gap-0">
-               <ListItem
-                  title="My Profile"
-                  isLink 
-                  href="/profile"
-                  description="View your profile"
-               />
+            <ListItem
+               title="My Profile"
+               isLink
+               href="/profile"
+               description="View your profile"
+            />
             <UserInfoSheet>
                <ListItem
                   title="Change Password"
