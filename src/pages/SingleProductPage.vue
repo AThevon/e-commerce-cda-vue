@@ -17,6 +17,11 @@
          AspectRatio,
          FontAwesomeIcon,
       },
+      data() {
+         return {
+            woodies: JSON.parse(localStorage.getItem("woodies") || "{}"),
+         };
+      },
       computed: {
          productStore() {
             return useProductStore();
@@ -31,6 +36,9 @@
                   (p) => String(p.id) === productId
                ) || ({} as ProductType)
             );
+         },
+         hasWoodie() {
+            return !!this.woodies[this.product.id];
          },
       },
       methods: {
@@ -73,20 +81,17 @@
             });
          },
          addWoodie() {
-            // Ensure that localStorage returns a valid JSON string "{}" if the item "woodies" does not exist
-            const woodies = JSON.parse(localStorage.getItem("woodies") || "{}");
+            const woodies = { ...this.woodies };
             const productId = this.product.id;
 
             if (woodies[productId]) {
-               // User has already given a woodie, remove it
                delete woodies[productId];
-               this.productStore.removeWoodie(this.product); // Assuming you have a removeWoodie method in your store
+               this.productStore.removeWoodie(this.product);
                toast({
                   title: `You removed your woodie!`,
                   variant: "default",
                });
             } else {
-               // User has not given a woodie, add it
                woodies[productId] = true;
                this.productStore.addWoodie(this.product);
                toast({
@@ -94,8 +99,7 @@
                   variant: "default",
                });
             }
-
-            // Update localStorage
+            this.woodies = woodies;
             localStorage.setItem("woodies", JSON.stringify(woodies));
          },
       },
@@ -133,7 +137,7 @@
       </Button>
       <div
          id="main-container"
-         class="relative h-full xl:h-[70vh] mx-0 sm:mx-20 xl:mx-40 mb-10 xl:mb-0 flex flex-col xl:flex-row justify-between items-center xl:items-start gap-8 xl:gap-0 p-16 rounded-md bg-white overflow-hidden"
+         class="relative h-full xl:h-[70vh] max-w-[100rem] mx-auto sm:mx-20 xl:mx-40 2xl:mx-auto mb-10 xl:mb-0 flex flex-col xl:flex-row justify-between items-center xl:items-start gap-8 xl:gap-0 p-16 rounded-md bg-white overflow-hidden"
       >
          <img
             :src="product.image"
@@ -146,14 +150,22 @@
             <h3 class="text-3xl font-main">{{ product.name }}</h3>
             <p class="text-xl max-w-64">{{ product.description }}</p>
             <p class="text-2xl font-bold">{{ product.unit_price }}€</p>
-            <Ratings :rating="product.woodies" containerClass="justify-end" />
-            <Button @click.stop="addWoodie" variant="outline" class="w-60">
+            <Ratings
+               v-if="product.woodies"
+               :rating="product.woodies"
+               containerClass="justify-end"
+            />
+            <Button
+               @click.stop="addWoodie"
+               :variant="hasWoodie ? 'outline' : 'secondary'"
+               class="w-60"
+            >
                <img
                   src="/assets/icon-woodies.png"
                   alt="Woodies"
                   class="w-7 h-7 mr-3 -ml-3 object-contain"
                />
-               Give a woodie !
+               {{ hasWoodie ? "Remove woodie" : "Give a woodie !" }}
             </Button>
             <Button @click.stop="addToCart" class="w-60">
                <FontAwesomeIcon icon="shopping-cart" class="mr-3 -ml-3" />Add to
