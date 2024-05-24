@@ -57,6 +57,7 @@
    >
       <div class="overflow-hidden w-full">
          <img
+            rel="preload"
             :src="product.image"
             :alt="product.name"
             class="w-full h-72 object-cover transition-all ease-out duration-300"
